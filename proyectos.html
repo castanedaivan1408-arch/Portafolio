@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Proyectos de branding, diseño web y producción audiovisual de Iván Castañeda.">
+    <title>Proyectos | Iván Castañeda</title>
+    <link rel="stylesheet" href="portafolio.css">
+    <!-- Marca la página como "con JavaScript": el CSS solo oculta lo que va a animar si esta clase existe -->
+    <script>document.documentElement.classList.add("js");</script>
+    <!-- El mismo JS sirve para las 3 páginas; defer = se ejecuta cuando el HTML ya cargó -->
+    <script src="portafolio.js" defer></script>
+</head>
+<body>
+<!-- ENCABEZADO FIJO: idéntico en las 3 páginas. Solo cambia aria-current="page", que marca dónde estás -->
+<header class="encabezado" id="encabezado">
+  <div class="encabezado-contenedor">
+    <a href="portafolio.html" class="logo">
+      <span class="logo-nombre">IVAN</span>
+      <span class="logo-apellido">CASTAÑEDA</span>
+    </a>
+
+    <nav aria-label="Navegación principal">
+      <ul class="links-barranavegacion" id="menuNavegacion">
+        <li><a href="portafolio.html">Inicio</a></li>
+        <li><a href="proyectos.html" aria-current="page">Proyectos</a></li>
+        <li><a href="contacto.html" class="cta">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <button class="menu-hamburguesa" id="botonMenu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menuNavegacion">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<!-- SECCIÓN 1: CABECERA DE PÁGINA (grid con áreas "titulo" y "texto") -->
+<section class="cabecera-pagina">
+  <div class="cabecera-pagina-contenedor">
+    <div class="cabecera-pagina-titulo-area revelar">
+      <span class="etiqueta-seccion">— Proyectos</span>
+      <h1 class="titulo-pagina">
+        Trabajo que<br>
+        <span class="titulo-pagina-italic">habla por ti.</span>
+      </h1>
+    </div>
+    <div class="cabecera-pagina-texto-area revelar">
+      <p class="texto-pagina">
+        Cada proyecto empieza con una pregunta: ¿qué necesita <strong>comunicar esta marca</strong> y a quién? Aquí ves cómo lo resolví, con identidad, web y contenido pensados para <strong>posicionar y conectar</strong>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 2: GALERÍA (grid con áreas amova / glindel / cielo / sublime) -->
+<section class="galeria" id="galeria">
+  <div class="galeria-contenedor">
+    <div class="galeria-rejilla">
+
+      <!-- Tarjeta: AMOVA. "revelar" = animación de entrada al hacer scroll -->
+      <article class="proyecto-tarjeta proyecto-oscuro proyecto-amova revelar">
+        <!-- Capa visual de fondo: la imagen vive en la carpeta img/. Para cambiarla, reemplaza el archivo o el src -->
+        <div class="proyecto-visual" aria-hidden="true">
+          <img src="img/logo-amova.png" alt="" width="396" height="359" loading="lazy">
+          <!-- <div class="proyecto-monograma">AM</div> -->
+        </div>
+        <div class="proyecto-contenido">
+          <p class="proyecto-categoria">Diseño · Mobiliario - Proyecto - SENA</p>
+          <h3 class="proyecto-titulo">AMOVA</h3>
+          <p class="proyecto-descripcion">Mobiliario multifuncional pensado para espacios reducidos. Un sistema visual y una visualización 3D que hacen que el producto se entienda antes de tocarlo.</p>
+          <ul class="proyecto-etiquetas">
+            <li>Diseño de producto</li>
+            <li>Visualización 3D</li>
+            <li>Branding</li>
+          </ul>
+          <!-- REEMPLAZA el href por el enlace real de tu proyecto (Canva, Behance, Figma, Drive...). target="_blank" lo abre en otra pestaña -->
+          <a href="/Hoja de vida/Portafolio/Amova actualizado oct 2026/files/index.html" class="proyecto-boton" target="_blank" rel="noopener noreferrer" aria-label="Ver el proyecto AMOVA (se abre en otra pestaña)">Ver proyecto ↗</a>
+        </div>
+      </article>
+
+      <!-- Tarjeta: GLINDEL. "revelar" = animación de entrada al hacer scroll -->
+      <article class="proyecto-tarjeta proyecto-salvia proyecto-glindel revelar">
+        <!-- Capa visual de fondo: la imagen vive en la carpeta img/. Para cambiarla, reemplaza el archivo o el src -->
+        <div class="proyecto-visual" aria-hidden="true">
+          <img src="img/logo glindel 2026.png" alt="" width="900" height="684" loading="lazy">
+          <!-- <div class="proyecto-monograma">GL</div> -->
+        </div>
+        <div class="proyecto-contenido">
+          <p class="proyecto-categoria">Moda · Identidad</p>
+          <h3 class="proyecto-titulo">GLINDEL</h3>
+          <p class="proyecto-descripcion">Una marca de moda urbana con identidad propia y comercio digital pensado para vender. Del concepto a la tienda en línea, con una imagen que se reconoce a primera vista.</p>
+          <ul class="proyecto-etiquetas">
+            <li>Branding</li>
+            <li>E-commerce</li>
+            <li>Moda urbana</li>
+          </ul>
+          <!-- REEMPLAZA el href por el enlace real de tu proyecto (Canva, Behance, Figma, Drive...). target="_blank" lo abre en otra pestaña -->
+          <a href="https://www.canva.com/" class="proyecto-boton" target="_blank" rel="noopener noreferrer" aria-label="Ver el proyecto GLINDEL (se abre en otra pestaña)">Ver proyecto ↗</a>
+        </div>
+      </article>
+
+      <!-- Tarjeta: CIELO NEGRO. "revelar" = animación de entrada al hacer scroll -->
+      <article class="proyecto-tarjeta proyecto-claro proyecto-cielo revelar">
+        <!-- Capa visual de fondo: la imagen vive en la carpeta img/. Para cambiarla, reemplaza el archivo o el src -->
+        <div class="proyecto-visual" aria-hidden="true">
+          <img src="img/Logo Cielo Negro Studios.png" alt="" width="616" height="401" loading="lazy">
+          <!-- <div class="proyecto-monograma">CN</div> -->
+        </div>
+        <div class="proyecto-contenido">
+          <p class="proyecto-categoria">Audiovisual · Branding</p>
+          <h3 class="proyecto-titulo">CIELO NEGRO</h3>
+          <p class="proyecto-descripcion">Dirección visual para una productora audiovisual de lujo discreto: negro profundo, tipografía limpia y un acento dorado usado con medida. Una marca que se siente cine.</p>
+          <ul class="proyecto-etiquetas">
+            <li>Manual de marca</li>
+            <li>Dirección visual</li>
+            <li>Diseño web</li>
+          </ul>
+          <!-- REEMPLAZA el href por el enlace real de tu proyecto (Canva, Behance, Figma, Drive...). target="_blank" lo abre en otra pestaña -->
+          <a href="https://www.canva.com/" class="proyecto-boton" target="_blank" rel="noopener noreferrer" aria-label="Ver el proyecto Cielo Negro (se abre en otra pestaña)">Ver proyecto ↗</a>
+        </div>
+      </article>
+
+      <!-- Tarjeta: SUBLIME MUSIC. "revelar" = animación de entrada al hacer scroll -->
+      <article class="proyecto-tarjeta proyecto-oscuro proyecto-sublime revelar">
+        <!-- Capa visual de fondo: la imagen vive en la carpeta img/. Para cambiarla, reemplaza el archivo o el src -->
+        <div class="proyecto-visual" aria-hidden="true">
+          <img src="img/logo-sublime-music(1).jpg" alt="" width="500" height="358" loading="lazy">
+          <!-- <div class="proyecto-monograma">SM</div> -->
+        </div>
+        <div class="proyecto-contenido">
+          <p class="proyecto-categoria">Música · Diseño web</p>
+          <h3 class="proyecto-titulo">SUBLIME MUSIC</h3>
+          <p class="proyecto-descripcion">Landing page para una productora musical: una experiencia oscura y envolvente, con los colores de su logo, que lleva al visitante de escuchar a contactar.</p>
+          <ul class="proyecto-etiquetas">
+            <li>Landing page</li>
+            <li>UX/UI</li>
+            <li>Identidad</li>
+          </ul>
+          <!-- REEMPLAZA el href por el enlace real de tu proyecto (Canva, Behance, Figma, Drive...). target="_blank" lo abre en otra pestaña -->
+          <a href="https://www.canva.com/" class="proyecto-boton" target="_blank" rel="noopener noreferrer" aria-label="Ver el proyecto Sublime Music (se abre en otra pestaña)">Ver proyecto ↗</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 3: LO QUE ENCUENTRAS EN CADA PROYECTO (reutiliza el diseño de tarjetas de Servicios) -->
+<section class="servicios">
+  <div class="servicios-container">
+
+    <div class="servicios-header revelar">
+      <div class="servicios-heading">
+        <span class="seccion-servicios">— Cómo lo cuento</span>
+        <h2 class="titulo-secciion-servicios">
+          Cada proyecto,<br>
+          <span class="titulo-secciion-servicios-italic">una historia clara.</span>
+        </h2>
+      </div>
+      <a href="contacto.html" class="boton-cta">Quiero el mío <span>→</span></a>
+    </div>
+
+    <div class="servicios-caja">
+      <div class="servicios-box1 revelar">
+        <div class="servicios-icono">🎯</div>
+        <h3 class="servicios-titulo">El reto</h3>
+        <p class="servicios-parrafo">Entiendo qué necesita la marca, quién la va a ver y qué debe sentir esa persona al encontrarla.</p>
+        <span class="servicios-frase">"Sin objetivo, solo hay decoración."</span>
+      </div>
+
+      <div class="servicios-box1 revelar">
+        <div class="servicios-icono">🧭</div>
+        <h3 class="servicios-titulo">La estrategia</h3>
+        <p class="servicios-parrafo">Traduzco el objetivo en decisiones visuales: color, tipografía, formato y canal, todo con una razón.</p>
+        <span class="servicios-frase">"Cada decisión tiene un porqué."</span>
+      </div>
+
+      <div class="servicios-box1 revelar">
+        <div class="servicios-icono">📦</div>
+        <h3 class="servicios-titulo">La entrega</h3>
+        <p class="servicios-parrafo">Archivos ordenados y listos para usar, para que tu marca se vea igual de bien en todas partes.</p>
+        <span class="servicios-frase">"Listo para implementar."</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECCIÓN 4: CIERRE (reutiliza el bloque oscuro de contacto del inicio) -->
+<section class="contacto">
+  <div class="contacto-container">
+    <h2 class="contacto-titulo revelar">
+      Tu marca es<br>
+      <span class="contacto-titulo-acento">la siguiente.</span>
+    </h2>
+    <p class="contacto-descripcion revelar">
+      Si ya viste cómo trabajo, el siguiente paso es simple: cuéntame qué necesitas y te respondo con una propuesta clara, sin rodeos.
+    </p>
+    <div class="contacto-boton revelar">
+      <a href="contacto.html" class="boton-solido">Cuéntame tu proyecto <span>→</span></a>
+      <a href="https://wa.me/573232037503" class="boton2" target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-columnas">
+
+      <div class="footer-columna">
+        <div class="footer-logo">
+          <div class="footer-logo-top">IVAN</div>
+          <div class="footer-logo-bottom">CASTAÑEDA</div>
+        </div>
+        <p class="footer-descripcion">
+          Diseñador Multimedia · Branding · Marketing Digital.<br>
+          Diseño estrategias visuales que convierten ideas en marcas memorables.
+        </p>
+      </div>
+
+      <div class="footer-columna">
+        <h4 class="footer-heading">Contacto</h4>
+        <ul class="footer-lista">
+          <li class="footer-item">castanedaivan1408@gmail.com</li>
+          <li class="footer-item">+57 323 203 7503</li>
+          <li class="footer-item">Colombia · Disponible remoto</li>
+        </ul>
+      </div>
+
+      <div class="footer-columna">
+        <h4 class="footer-heading">Redes</h4>
+        <ul class="footer-lista">
+          <li class="footer-item footer-item-link"><span class="footer-flecha">→</span> LinkedIn</li>
+          <li class="footer-item footer-item-link"><span class="footer-flecha">→</span> Behance</li>
+          <li class="footer-item footer-item-link"><span class="footer-flecha">→</span> Instagram</li>
+          <li class="footer-item footer-item-link"><span class="footer-flecha">→</span> Portafolio</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Ivan Castañeda. Todos los derechos reservados.</span>
+      <button class="footer-volver-arriba" id="botonVolverArriba" type="button">↑ Volver arriba</button>
+    </div>
+
+  </div>
+</footer>
+
+<!-- BOTÓN FLOTANTE DE WHATSAPP: position: fixed en la esquina inferior derecha -->
+<a class="whatsapp-flotante" href="https://wa.me/573232037503?text=Hola%20Iv%C3%A1n%2C%20quisiera%20consultar%20sobre%20tus%20servicios%20multimedia."target="_blank" rel="noopener" aria-label="Escribir a Iván por WhatsApp">
+  <span class="whatsapp-etiqueta">Escríbeme por WhatsApp</span>
+  <!-- Ícono de WhatsApp en SVG: no necesita imágenes externas y toma el color del texto (currentColor) -->
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+</body>
+</html>

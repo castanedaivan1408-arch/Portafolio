@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Iván Castañeda</title>
+    <link rel="stylesheet" href="portafolio.css">
+    <!-- Marca la página como "con JavaScript": el CSS solo oculta lo que va a animar si esta clase existe -->
+    <script>document.documentElement.classList.add("js");</script>
+    <!-- defer: el script se ejecuta cuando el HTML ya terminó de cargar -->
+    <script src="portafolio.js" defer></script>
+</head>
+<body>
+<!-- ENCABEZADO FIJO: idéntico en las 3 páginas. Solo cambia aria-current="page", que marca dónde estás -->
+<header class="encabezado" id="encabezado">
+  <div class="encabezado-contenedor">
+    <a href="#inicio" class="logo">
+      <span class="logo-nombre">IVAN</span>
+      <span class="logo-apellido">CASTAÑEDA</span>
+    </a>
+
+    <nav aria-label="Navegación principal">
+      <ul class="links-barranavegacion" id="menuNavegacion">
+        <li><a href="#inicio" aria-current="page">Inicio</a></li>
+        <li><a href="proyectos.html">Proyectos</a></li>
+        <li><a href="contacto.html" class="cta">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <button class="menu-hamburguesa" id="botonMenu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menuNavegacion">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<section id="inicio" class="hero">
+  <div class="hero-contenedor">
+
+    <div class="hero-texto revelar">
+
+      <div class="etiqueta">
+        <span class="etiqueta-Disponible-para-proyectos"></span>
+        <span class="etiqueta-Disponible-para-proyectos-insignia">Disponible para proyectos</span>
+      </div>
+
+      <h1 class="hero-titulo-diseño">
+        Diseño<br>
+        <span class="hero-titulo-que">Que</span><br>
+        <span class="hero-titulo-convierte">Convierte.</span>
+      </h1>
+
+      <p class="hero-texto1">
+        No creo diseños para llenar espacios.<br>
+        Creo <strong>experiencias visuales</strong> que comunican, posicionan y generan resultados medibles.
+      </p>
+
+      <div class="hero-botones">
+        <a href="contacto.html" class="boton boton-Trabajemos-juntos">Trabajemos juntos <span>→</span></a>
+        <a href="proyectos.html" class="boton boton-Ver-Portafolio">Ver Portafolio</a>
+      </div>
+
+      <div class="hero-Estadisticas">
+        <div class="Estadisticas">
+          <div class="Estadisticas-numero">3+</div>
+          <div class="Estadisticas-texto">Años de experiencia</div>
+        </div>
+        <div class="Estadisticas">
+          <div class="Estadisticas-numero">20+</div>
+          <div class="Estadisticas-texto">Proyectos entregados</div>
+        </div>
+        <div class="Estadisticas">
+          <div class="Estadisticas-numero">100%</div>
+          <div class="Estadisticas-texto">Clientes satisfechos</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hero-foto revelar">
+      <div class="cinta-foto">
+        <div class="cinta-foto-decoracion"></div>
+        <div class="cinta-foto-marco">
+          <div class="cinta-foto-imagen">
+            <img src="img/foto_perfil_HD_gris.png" alt="Ivan Castañeda — Diseñador Multimedia">
+          </div>
+          <span class="cinta-foto-pie-de-foto">Ivan Castañeda.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="scroll-indicador">
+    <span>Descubre mi trabajo</span>
+    <div class="scroll-flecha"></div>
+    <span>↓</span>
+  </div>
+</section>
+
+<section id="inicio-sobre-mi" class="sobre-mi">
+  <div class="sobre-mi-contenedor">
+
+    <div class="sobre-mi-imagen revelar revelar-izquierda">
+
+      <div class="sobre-mi-imagen-contenedor">
+        <div class="cuadrado-con-borde"></div>
+        <div class="marco-imagen">
+          <img src="img/imagen seccion 3.png" alt="Estudio creativo">
+        </div>
+        <div class="cuadrado-verde"></div>
+      </div>
+
+      <div class="texto-vertical">
+        <span>ESTRATEGIA · DISEÑO · IMPACTO</span>
+      </div>
+
+    </div>
+
+    <div class="sobre-mi-texto revelar revelar-derecha">
+
+      <span class="linea-sobre-mi">— Sobre mí</span>
+
+      <h2 class="titulo-sobre-mi">
+        No solo diseño.<br>
+        <span class="titulo-sobre-mi-italic">Construyo marcas</span><br>
+        con estrategia. 
+      </h2>
+
+      <p class="sobre-mi-descripcion">
+        Soy Tecnólogo en Producción Multimedia en formación con experiencia en branding, diseño gráfico, producción audiovisual, marketing digital y diseño web.
+      </p>
+
+      <p class="sobre-mi-descripcion">
+        Mi objetivo es ayudar a empresas, emprendimientos y profesionales a
+        <strong>comunicar mejor, vender más y diferenciarse</strong>
+        mediante soluciones visuales modernas y estratégicamente diseñadas.
+      </p>
+
+      <a href="#servicios" class="sobre-mi-link">Conoce mis servicios <span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="servicios" class="servicios">
+  <div class="servicios-container">
+
+    <div class="servicios-header revelar">
+      <div class="servicios-heading">
+        <span class="seccion-servicios">— Servicios</span>
+        <h2 class="titulo-secciion-servicios">
+          ¿Qué puedo hacer<br>
+          <span class="titulo-secciion-servicios-italic">por tu marca?</span>
+        </h2>
+      </div>
+      <a href="contacto.html" class="boton-cta">Quiero impulsar mi negocio <span>→</span></a>
+    </div>
+
+    <div class="servicios-caja">
+
+      <div class="servicios-box1 revelar">
+        <div class="servicios-icono">🎨</div>
+        <h3 class="servicios-titulo">Branding</h3>
+        <p class="servicios-parrafo">Construcción de marcas memorables que comunican y conectan con tu audiencia ideal.</p>
+        <span class="servicios-frase">"Cada marca cuenta una historia. Mi trabajo es hacer que la tuya sea imposible de olvidar."</span>
+      </div>
+
+      <div class="servicios-box1 revelar">
+        <div class="servicios-icono">💻</div>
+        <h3 class="servicios-titulo">Diseño Web</h3>
+        <p class="servicios-parrafo">Landing pages y sitios de alta conversión. Cada clic tiene un propósito, cada página genera confianza.</p>
+        <span class="servicios-frase">"Diseño que vende."</span>
+      </div>
+
+      <div class="servicios-box1 revelar">
+        <div class="servicios-icono">📱</div>
+        <h3 class="servicios-titulo">Marketing Digital</h3>
+        <p class="servicios-parrafo">Campañas que generan resultados reales. No se trata de publicar más, sino de conectar mejor.</p>
+        <span class="servicios-frase">"Conectar mejor."</span>
+      </div>
+
+      <div class="servicios-box1 revelar">
+        <div class="servicios-icono">🎬</div>
+        <h3 class="servicios-titulo">Producción Audiovisual</h3>
+        <p class="servicios-parrafo">Contenido de video que conecta emocionalmente y posiciona tu marca en cualquier plataforma.</p>
+        <span class="servicios-frase">"Historias que mueven."</span>
+      </div>
+
+      <div class="servicios-box1 revelar">
+        <div class="servicios-icono">📸</div>
+        <h3 class="servicios-titulo">Fotografía Comercial</h3>
+        <p class="servicios-parrafo">Imágenes estratégicas que venden. Cada foto comunica el valor de tu producto o servicio.</p>
+        <span class="servicios-frase">"Imágenes que venden."</span>
+      </div>
+
+      <div class="servicios-box1 revelar">
+        <div class="servicios-icono">📈</div>
+        <h3 class="servicios-titulo">Meta Ads</h3>
+        <p class="servicios-parrafo">Publicidad orientada a conversiones reales. Segmentación precisa, creativos que detienen el scroll.</p>
+        <span class="servicios-frase">"ROI primero."</span>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="herramientas">
+  <div class="herramientas-header revelar">
+    <div class="herramientas-heading-fila">
+      <span class="seccion-herramientas">— Herramientas</span>
+      <div class="linea"></div>
+    </div>
+    <h2 class="titulo-seccion-herramientas">Software que domino</h2>
+  </div>
+
+  <div class="seccion-herramientas-lista">
+
+    <div class="herramienta revelar">
+      <div class="herramienta-icono" style="background: rgba(49, 168, 255, 0.133); border: 2px solid rgba(49, 168, 255, 0.333); color: rgb(49, 168, 255);">Ps</div>
+      <span class="herramienta-nombre">Photoshop</span>
+    </div>
+
+    <div class="herramienta revelar">
+      <div class="herramienta-icono" style="background: rgba(255, 154, 0, 0.133); border: 2px solid rgba(255, 154, 0, 0.333); color: rgb(255, 154, 0);">Ai</div>
+      <span class="herramienta-nombre">Illustrator</span>
+    </div>
+
+    <div class="herramienta revelar">
+      <div class="herramienta-icono" style="background: rgba(153, 153, 255, 0.133); border: 2px solid rgba(153, 153, 255, 0.333); color: rgb(153, 153, 255);">Ae</div>
+      <span class="herramienta-nombre">After Effects</span>
+    </div>
+
+    <div class="herramienta revelar">
+      <div class="herramienta-icono" style="background: rgba(232, 119, 193, 0.133); border: 2px solid rgba(232, 119, 193, 0.333); color: rgb(232, 119, 193);">Pr</div>
+      <span class="herramienta-nombre">Premiere</span>
+    </div>
+
+    <div class="herramienta revelar">
+      <div class="herramienta-icono" style="background: rgba(0, 196, 204, 0.133); border: 2px solid rgba(0, 196, 204, 0.333); color: rgb(0, 196, 204);">VS</div>
+      <span class="herramienta-nombre">VS Code</span>
+    </div>
+
+    <div class="herramienta revelar">
+      <div class="herramienta-icono" style="background: rgba(232, 125, 13, 0.133); border: 2px solid rgba(232, 125, 13, 0.333); color: rgb(232, 125, 13);">Bl</div>
+      <span class="herramienta-nombre">Blender</span>
+    </div>
+
+    <div class="herramienta revelar">
+      <div class="herramienta-icono" style="background: rgba(242, 78, 30, 0.133); border: 2px solid rgba(242, 78, 30, 0.333); color: rgb(242, 78, 30);">Fi</div>
+      <span class="herramienta-nombre">Figma</span>
+    </div>
+
+    <div class="herramienta revelar">
+      <div class="herramienta-icono" style="background: rgba(0, 130, 251, 0.133); border: 2px solid rgba(0, 130, 251, 0.333); color: rgb(0, 130, 251);">Ma</div>
+      <span class="herramienta-nombre">Meta Ads</span>
+    </div>
+  </div>
+</section>
+
+<section id="proceso" class="proceso">
+  <div class="proceso-container">
+
+    <div class="proceso-header revelar">
+      <span class="seccion-proceso">— Proceso creativo</span>
+      <h2 class="proceso-titulo">
+        Cómo trabajo<br>
+        <span class="proceso-titulo-italic">para ti</span>
+      </h2>
+    </div>
+
+    <div class="proceso-lista">
+
+      <div class="pasos-de-proceso revelar">
+        <div class="pasos-de-proceso-box">
+          <span class="proceso-numero">01</span>
+        </div>
+        <div class="seccion-proceso-contenido">
+          <h3 class="seccion-proceso-titulo">Descubrimiento</h3>
+          <p class="seccion-proceso-descripcion">Escucho y analizo tu negocio, audiencia, competencia y objetivos para entender qué necesitas realmente.</p>
+        </div>
+        <div class="flecha">
+          <span>↓</span>
+        </div>
+      </div>
+
+      <div class="pasos-de-proceso revelar">
+        <div class="pasos-de-proceso-box">
+          <span class="proceso-numero">02</span>
+        </div>
+        <div class="seccion-proceso-contenido">
+          <h3 class="seccion-proceso-titulo">Estrategia</h3>
+          <p class="seccion-proceso-descripcion">Planeamos juntos el camino visual y comunicacional que maximiza tus resultados.</p>
+        </div>
+        <div class="flecha">
+          <span>↓</span>
+        </div>
+      </div>
+
+      <div class="pasos-de-proceso revelar">
+        <div class="pasos-de-proceso-box">
+          <span class="proceso-numero">03</span>
+        </div>
+        <div class="seccion-proceso-contenido">
+          <h3 class="seccion-proceso-titulo">Diseño</h3>
+          <p class="seccion-proceso-descripcion">Construimos los elementos gráficos, digitales y audiovisuales con precisión y criterio estético.</p>
+        </div>
+        <div class="flecha">
+          <span>↓</span>
+        </div>
+      </div>
+
+      <div class="pasos-de-proceso revelar">
+        <div class="pasos-de-proceso-box">
+          <span class="proceso-numero">04</span>
+        </div>
+        <div class="seccion-proceso-contenido">
+          <h3 class="seccion-proceso-titulo">Optimización</h3>
+          <p class="seccion-proceso-descripcion">Refinamos, iteramos y mejoramos basándonos en datos y retroalimentación.</p>
+        </div>
+        <div class="flecha">
+          <span>↓</span>
+        </div>
+      </div>
+
+      <div class="pasos-de-proceso revelar">
+        <div class="pasos-de-proceso-box">
+          <span class="proceso-numero">05</span>
+        </div>
+        <div class="seccion-proceso-contenido">
+          <h3 class="seccion-proceso-titulo">Entrega</h3>
+          <p class="seccion-proceso-descripcion">Entregamos resultados listos para implementar con soporte post-lanzamiento.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="seccion-por-que">
+  <div class="seccion-por-que-container">
+
+    <div class="seccion-por-que-texto-columna revelar revelar-izquierda">
+      <span class="seccion-por-que-texto-titulo">— ¿Por qué trabajar conmigo?</span>
+
+      <h2 class="seccion-por-que-titulo">
+        Más que un diseñador.<br>
+        <span class="seccion-por-que-titulo-1">Un aliado estratégico.</span>
+      </h2>
+
+      <p class="seccion-por-que-descripcion">
+        Combino visión creativa con pensamiento estratégico para entregar proyectos que no solo se ven bien, sino que
+        <strong>cumplen objetivos de negocio</strong>.
+      </p>
+
+      <a href="contacto.html" class="seccion-por-que-boton-cta">Conversemos <span>→</span></a>
+    </div>
+
+    <div class="lista-de-habilidades revelar revelar-derecha">
+      <div class="habilidad-cuadro"><span class="habilidad-check">✔</span><span class="habilidad-nombre">Pensamiento Estratégico</span></div>
+      <div class="habilidad-cuadro"><span class="habilidad-check">✔</span><span class="habilidad-nombre">Creatividad</span></div>
+      <div class="habilidad-cuadro"><span class="habilidad-check">✔</span><span class="habilidad-nombre">Comunicación Visual</span></div>
+      <div class="habilidad-cuadro"><span class="habilidad-check">✔</span><span class="habilidad-nombre">Branding</span></div>
+      <div class="habilidad-cuadro"><span class="habilidad-check">✔</span><span class="habilidad-nombre">Marketing Digital</span></div>
+      <div class="habilidad-cuadro"><span class="habilidad-check">✔</span><span class="habilidad-nombre">Diseño UX/UI</span></div>
+      <div class="habilidad-cuadro"><span class="habilidad-check">✔</span><span class="habilidad-nombre">Multimedia</span></div>
+      <div class="habilidad-cuadro"><span class="habilidad-checkk">✔</span><span class="habilidad-nombre">Liderazgo</span></div>
+      <div class="habilidad-cuadro"><span class="habilidad-check">✔</span><span class="habilidad-nombre">Producción Audiovisual</span></div>
+      <div class="habilidad-cuadro"><span class="habilidad-check">✔</span><span class="habilidad-nombre">Meta Ads</span></div>
+      <div class="habilidad-cuadro"><span class="habilidad-check">✔</span><span class="habilidad-nombre">Fotografía</span></div>
+      <div class="habilidad-cuadro"><span class="habilidad-check">✔</span><span class="habilidad-nombre">Tipografía</span></div>
+    </div>
+
+  </div>
+</section>
+
+<section class="testimonios">
+  <div class="testimonios-container">
+
+    <div class="testimonios-header revelar">
+      <span class="seccion-testimonios">— Testimonios</span>
+      <h2 class="seccion-testimonios-titulo">
+        Lo que dicen<br>
+        <span class="seccion-testimonios-titulo-italic">mis clientes</span>
+      </h2>
+    </div>
+
+    <div class="seccion-testimonios-tarjetas">
+
+      <div class="seccion-testimonios-box revelar">
+        <div class="seccion-testimonios-estrellas">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="seccion-testimonios-texto">"La comunicación fue excelente y el resultado superó nuestras expectativas. Ivan tiene una visión clara de lo que una marca necesita para destacar."</p>
+        <div class="seccion-testimonios-texto-cliente">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&auto=format" alt="Daniela Moreno" class="seccion-testimonios-cliente-foto">
+          <div class="seccion-testimonios-cliente-info">
+            <div class="seccion-testimonios-cliente-nombre">Daniela Moreno</div>
+            <div class="seccion-testimonios-cliente-rol">CEO · Glindel Studio</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="seccion-testimonios-box revelar">
+        <div class="seccion-testimonios-estrellas">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="seccion-testimonios-texto">"Transformó completamente la identidad de nuestro negocio. El nuevo branding generó un aumento inmediato en consultas y ventas desde el primer mes."</p>
+        <div class="seccion-testimonios-texto-cliente">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&auto=format" alt="Carlos Vega" class="seccion-testimonios-cliente-foto">
+          <div class="seccion-testimonios-cliente-info">
+            <div class="seccion-testimonios-cliente-nombre">Carlos Vega</div>
+            <div class="seccion-testimonios-cliente-rol">Director · Amova Digital</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="seccion-testimonios-box revelar">
+        <div class="seccion-testimonios-estrellas">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="seccion-testimonios-texto">"Profesional, puntual y con un ojo para los detalles que marca la diferencia. Nuestras campañas en Meta nunca habían funcionado tan bien."</p>
+        <div class="seccion-testimonios-texto-cliente">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format" alt="Valentina Torres" class="seccion-testimonios-cliente-foto">
+          <div class="seccion-testimonios-cliente-info">
+            <div class="seccion-testimonios-cliente-nombre">Valentina Torres</div>
+            <div class="seccion-testimonios-cliente-rol">Fundadora · Studio 21</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section id="contacto" class="contacto">
+  <div class="contacto-container">
+
+    <h2 class="contacto-titulo revelar">
+      Tu marca merece<br>
+      <span class="contacto-titulo-acento">destacar.</span>
+    </h2>
+
+    <p class="contacto-descripcion revelar">
+      Si buscas un profesional que combine diseño, estrategia y marketing para crear proyectos memorables, estoy listo para ayudarte. Tu próximo gran proyecto comienza con una conversación.
+    </p>
+
+    <div class="contacto-boton revelar">
+      <a href="mailto:castanedaivan1408@gmail.com" class="boton-solido">Comencemos hoy <span>→</span></a>
+      <a href="https://calendly.com" class="boton2">Agenda una reunión</a>
+    </div>
+
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-columnas">
+
+      <div class="footer-columna">
+        <div class="footer-logo">
+          <div class="footer-logo-top">IVAN</div>
+          <div class="footer-logo-bottom">CASTAÑEDA</div>
+        </div>
+        <p class="footer-descripcion">
+          Diseñador Multimedia · Branding · Marketing Digital.<br>
+          Diseño estrategias visuales que convierten ideas en marcas memorables.
+        </p>
+      </div>
+
+      <div class="footer-columna">
+        <h4 class="footer-heading">Contacto</h4>
+        <ul class="footer-lista">
+          <li class="footer-item">castanedaivan1408@gmail.com</li>
+          <li class="footer-item">+57 323 203 7503</li>
+          <li class="footer-item">Colombia · Disponible remoto</li>
+        </ul>
+      </div>
+
+      <div class="footer-columna">
+        <h4 class="footer-heading">Redes</h4>
+        <ul class="footer-lista">
+          <li class="footer-item footer-item-link"><span class="footer-flecha">→</span> LinkedIn</li>
+          <li class="footer-item footer-item-link"><span class="footer-flecha">→</span> Behance</li>
+          <li class="footer-item footer-item-link"><span class="footer-flecha">→</span> Instagram</li>
+          <li class="footer-item footer-item-link"><span class="footer-flecha">→</span> Portafolio</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Ivan Castañeda. Todos los derechos reservados.</span>
+      <button class="footer-volver-arriba" id="botonVolverArriba" type="button">↑ Volver arriba</button>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- BOTÓN FLOTANTE DE WHATSAPP: position: fixed en la esquina inferior derecha -->
+<a class="whatsapp-flotante" href="https://wa.me/573138158951?text=Hola%20Iv%C3%A1n%2C%20quisiera%20consultar%20sobre%20tus%20servicios%20multimedia." target="_blank" rel="noopener" aria-label="Escribir a Iván por WhatsApp">
+  <span class="whatsapp-etiqueta">Escríbeme por WhatsApp</span>
+  <!-- Ícono de WhatsApp en SVG: no necesita imágenes externas y toma el color del texto (currentColor) -->
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+
+</body>
+</html>

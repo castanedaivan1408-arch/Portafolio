@@ -1,0 +1,2449 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+/* =====================================================================
+   ENCABEZADO FIJO (reemplaza al antiguo .header)
+   ===================================================================== */
+
+html {
+  scroll-behavior: smooth;   /* al pulsar un enlace interno (#servicios) la página se desliza suave en vez de saltar */
+  scroll-padding-top: 80px;  /* deja 80px libres arriba al llegar a una sección, para que el encabezado fijo no la tape */
+}
+
+.encabezado {
+  position: fixed;                        /* lo saca del flujo normal y lo pega a la ventana: NO se mueve al hacer scroll (header estático) */
+  top: 0;                                 /* pegado al borde superior de la ventana */
+  left: 0;                                /* pegado al borde izquierdo */
+  width: 100%;                            /* ocupa todo el ancho (al ser fixed ya no se estira solo) */
+  z-index: 1000;                          /* capa alta: siempre por encima del contenido de las secciones */
+  background-color: rgba(255, 255, 255, 0.96); /* blanco casi opaco para que el texto que pasa por debajo no estorbe */
+  backdrop-filter: blur(8px);             /* desenfoca lo que queda detrás del encabezado (efecto vidrio) */
+  border-bottom: 1px solid #E0E0E0;       /* línea fina gris que lo separa del contenido */
+  transition: box-shadow 0.3s ease;       /* la sombra aparece de forma suave, no de golpe */
+}
+
+.encabezado.con-sombra {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08); /* sombra suave; JS agrega esta clase cuando bajas más de 10px */
+}
+
+.encabezado-contenedor {
+  position: relative;        /* será el "punto de referencia" del menú desplegable, que usa position: absolute */
+  max-width: 1280px;         /* mismo ancho máximo que el resto del sitio */
+  margin: 0 auto;            /* centrado horizontal */
+  padding: 16px 24px;        /* aire interno: 16px arriba/abajo, 24px a los lados */
+  display: flex;             /* FLEXBOX: pone logo, menú y hamburguesa en una fila */
+  align-items: center;       /* los centra verticalmente */
+  justify-content: space-between; /* logo a la izquierda, menú a la derecha, espacio en medio */
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.logo-nombre,
+.logo-apellido {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.logo-nombre {
+  color: #111111;
+}
+
+.logo-apellido {
+  color: #A8B89A;
+}
+
+
+.links-barranavegacion {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  list-style: none;
+}
+
+.links-barranavegacion a {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #111111;
+  transition: color 0.2s ease;
+}
+
+.links-barranavegacion a:hover {
+  color: #A8B89A;
+}
+
+
+.cta {
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 10px 20px;
+  border: 2px solid #111111;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.cta:hover {
+  background-color: #111111;
+  color: #ffffff;
+}
+
+
+.menu-hamburguesa {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-hamburguesa span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: #111111;
+  transition: all 0.2s ease;
+}
+
+
+/* =====================================================================
+   MENÚ RESPONSIVE (pantallas de 768px o menos): se despliega con la hamburguesa
+   ===================================================================== */
+@media (max-width: 768px) {
+
+  .menu-hamburguesa {
+    display: flex;              /* en móvil sí se muestra el botón de tres rayas */
+  }
+
+  .links-barranavegacion {
+    position: absolute;         /* el menú "flota" sin empujar el contenido de abajo */
+    top: 100%;                  /* empieza justo donde termina .encabezado-contenedor (su referencia relative) */
+    left: 0;                    /* pegado al borde izquierdo de esa referencia */
+    width: 100%;                /* ocupa todo el ancho de la pantalla */
+    flex-direction: column;     /* FLEXBOX: los enlaces pasan de fila a columna */
+    align-items: stretch;       /* cada <li> se estira a todo el ancho */
+    gap: 0;                     /* quita los 32px de separación del escritorio; el espacio lo dan los enlaces */
+    background-color: #ffffff;  /* fondo sólido para que se lea sobre el contenido */
+    max-height: 0;              /* CERRADO: altura cero... */
+    overflow: hidden;           /* ...y lo que no cabe se oculta */
+    opacity: 0;                 /* invisible */
+    visibility: hidden;         /* además no se puede enfocar con el teclado mientras está cerrado */
+    transition: max-height 0.4s ease, opacity 0.3s ease, visibility 0.3s ease; /* animación de apertura/cierre */
+  }
+
+  .links-barranavegacion.abierto {
+    max-height: 480px;          /* ABIERTO: altura suficiente para todos los enlaces (se anima de 0 a 480) */
+    opacity: 1;                 /* visible */
+    visibility: visible;        /* se puede enfocar y pulsar */
+    border-bottom: 1px solid #E0E0E0; /* línea inferior solo cuando está abierto */
+    box-shadow: 0 16px 24px rgba(0, 0, 0, 0.08); /* sombra para separarlo del contenido */
+  }
+
+  .links-barranavegacion li a {
+    display: block;             /* el enlace ocupa toda la fila, así es fácil pulsarlo con el dedo */
+    padding: 16px 24px;         /* área táctil cómoda */
+  }
+
+  .links-barranavegacion a.cta {
+    margin: 12px 24px 24px;     /* el botón "Trabajemos" se separa de los bordes */
+    text-align: center;         /* texto centrado dentro del botón */
+    padding: 14px 20px;         /* mismo padding del botón original, un poco más alto */
+  }
+
+  /* Animación de la hamburguesa: las 3 rayas se convierten en una X cuando el menú está abierto */
+  .menu-hamburguesa.abierto span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);   /* la raya de arriba baja 8px (6px de gap + 2px de alto) y gira */
+  }
+  .menu-hamburguesa.abierto span:nth-child(2) {
+    opacity: 0;                                 /* la raya del medio desaparece */
+  }
+  .menu-hamburguesa.abierto span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg); /* la de abajo sube 8px y gira al lado contrario: forma la X */
+  }
+}
+
+
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  padding-top: 80px;
+  padding-bottom: 40px;
+}
+
+.hero-contenedor {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 64px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 64px;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.hero-texto {
+  flex: 1 1 480px;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  padding: 8px 16px;
+  border: 1px solid #A8B89A;
+  background-color: rgba(168, 184, 154, 0.1);
+  width: fit-content;
+}
+
+.etiqueta-Disponible-para-proyectos {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #A8B89A;
+}
+
+.etiqueta-Disponible-para-proyectos-insignia {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #A8B89A;
+}
+
+
+.hero-titulo-diseño {
+  font-size: clamp(3.2rem, 8vw, 6.5rem);
+  font-weight: 800;
+  color: #111111;
+  line-height: 1;
+  margin-bottom: 24px;
+}
+
+.hero-titulo-que {
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(3.2rem, 8vw, 6.5rem);
+}
+
+.hero-titulo-convierte {
+  color: #A8B89A;
+  font-size: clamp(3.2rem, 8vw, 6.5rem);
+}
+
+
+.hero-texto1 {
+  font-size: 18px;
+  color: #555555;
+  line-height: 1.7;
+  margin-bottom: 40px;
+  max-width: 420px;
+}
+
+.hero-texto1-strong {
+  color: #111111;
+  font-weight: 600;
+}
+
+
+.hero-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.boton-Trabajemos-juntos {
+  background-color: #111111;
+  color: #ffffff;
+}
+
+.boton-Trabajemos-juntos:hover {
+  background-color: #A8B89A;
+  color: #111111;
+}
+
+.boton-Ver-Portafolio {
+  border: 2px solid #111111;
+  color: #111111;
+}
+
+.boton-Ver-Portafolio:hover {
+  background-color: #111111;
+  color: #ffffff;
+}
+
+
+.hero-Estadisticas {
+  display: flex;
+  gap: 40px;
+  padding-top: 32px;
+  border-top: 1px solid #E0E0E0;
+}
+
+.Estadisticas-numero {
+  font-size: 24px;
+  font-weight: 800;
+  color: #111111;
+}
+
+.Estadisticas-texto {
+  font-size: 12px;
+  color: #888888;
+  letter-spacing: 0.05em;
+}
+
+
+.hero-foto {
+  flex: 1 1 340px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cinta-foto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: rotate(2deg);
+}
+
+.cinta-foto-decoracion {
+  width: 80px;
+  height: 20px;
+  background-color: #A8B89A;
+  opacity: 0.75;
+  transform: rotate(-2deg);
+  margin-bottom: -10px;
+  z-index: 1;
+}
+
+.cinta-foto-marco {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 14px 14px 32px;
+  border: 1px solid #E8E8E8;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.cinta-foto-imagen {
+  width: 280px;
+  height: 340px;
+  overflow: hidden;
+  background-color: #cccccc;
+}
+
+.cinta-foto-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+}
+
+.cinta-foto-pie-de-foto {
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #111111;
+}
+
+
+.scroll-indicador {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.6;
+  margin-top: 40px;
+}
+
+.scroll-indicador span:first-child {
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #888888;
+}
+
+.scroll-flecha {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, #111111, transparent);
+  animation: pulse 1.8s ease-in-out infinite;
+} 
+ 
+.scroll-indicador span:last-child {
+  font-size: 18px;
+  color: #111111;
+} 
+
+
+
+@media (max-width: 768px) {
+  .hero-contenedor {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 24px;
+  }
+
+  .hero-texto {
+    align-items: center;
+  }
+
+  .hero-botones {
+    justify-content: center;
+  }
+
+  .hero-Estadisticas {
+    justify-content: center;
+  }
+}
+
+
+.sobre-mi {
+  padding: 112px 0;
+  background-color: #F3F3F3;
+}
+
+.sobre-mi-contenedor {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 64px;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.sobre-mi-imagen {
+  flex: 1 1 400px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.sobre-mi-imagen-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: fit-content;
+}
+
+
+.cuadrado-con-borde {
+  width: 48px;
+  height: 48px;
+  border: 2px solid #111111;
+  margin-left: -20px;
+  margin-bottom: -140px;
+  align-self: flex-start;
+}
+
+
+.marco-imagen {
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 4 / 5;
+  background-color: #111111;
+  overflow: hidden;
+}
+
+.marco-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  filter: grayscale(100%);
+}
+
+
+.cuadrado-verde {
+  width: 96px;
+  height: 96px;
+  background-color: #A8B89A;
+  align-self: flex-end;
+  margin-top: -30px;
+  margin-right: -20px;
+}
+
+
+.texto-vertical {
+  display: flex;
+  align-items: center;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.texto-vertical span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #A8B89A;
+  white-space: nowrap;
+}
+
+
+.sobre-mi-texto {
+  flex: 1 1 480px;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.linea-sobre-mi {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #A8B89A;
+  margin-bottom: 12px;
+}
+
+.titulo-sobre-mi {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  color: #111111;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+.titulo-sobre-mi-italic {
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  color: #A8B89A;
+}
+
+.sobre-mi-descripcion {
+  font-size: 16px;
+  color: #555555;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.sobre-mi-descripcion:first-of-type {
+  margin-bottom: 40px;
+}
+
+.sobre-mi-descripcion strong {
+  color: #111111;
+  font-weight: 600;
+}
+
+.sobre-mi-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #111111;
+  border-bottom: 2px solid #A8B89A;
+  padding-bottom: 4px;
+  transition: color 0.2s ease;
+}
+
+.sobre-mi-link:hover {
+  color: #A8B89A;
+}
+
+
+@media (max-width: 900px) {
+  .sobre-mi-contenedor {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .sobre-mi-imagen-contenedor {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .texto-vertical {
+    writing-mode: vertical-rl;
+    transform: none;
+    margin-top: 32px;
+  }
+
+  .sobre-mi-texto {
+    align-items: center;
+  }
+
+  .sobre-mi-link {
+    margin: 0 auto;
+  }
+}
+
+.servicios {
+  padding: 112px 0;
+  background-color: #ffffff;
+}
+
+.servicios-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.servicios-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 64px;
+}
+
+.servicios-heading {
+  display: flex;
+  flex-direction: column;
+}
+
+.seccion-servicios {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #A8B89A;
+  margin-bottom: 12px;
+}
+
+.titulo-secciion-servicios {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: #111111;
+  line-height: 1.2;
+}
+
+.titulo-secciion-servicios-italic {
+  font-style: italic;
+  font-weight: 300;
+  color: #A8B89A;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.boton-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 12px 24px;
+  background-color: #A8B89A;
+  color: #111111;
+  transition: all 0.3s ease;
+  width: fit-content;
+}
+
+.boton-cta:hover {
+  background-color: #111111;
+  color: #ffffff;
+}
+
+
+.servicios-caja {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #ffffff;
+  border-top: 1px solid #E0E0E0;
+  border-left: 1px solid #E0E0E0;
+}
+
+.servicios-box1 {
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  background-color: #ffffff;
+  border-right: 1px solid #E0E0E0;
+  border-bottom: 1px solid #E0E0E0;
+  transition: background-color 0.3s ease;
+  cursor: default;
+}
+
+.servicios-box1:hover {
+  background-color: #111111;
+}
+
+.servicios-icono {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.servicios-titulo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 12px;
+  transition: color 0.3s ease;
+}
+
+.servicios-box1:hover .servicios-titulo {
+  color: #ffffff;
+}
+
+.servicios-parrafo {
+  font-size: 14px;
+  color: #666666;
+  line-height: 1.7;
+  margin-bottom: 16px;
+  transition: color 0.3s ease;
+}
+
+.servicios-box1:hover .servicios-parrafo {
+  color: #cccccc;
+}
+
+.servicios-frase {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #A8B89A;
+  font-style: italic;
+  margin-top: auto;
+}
+
+
+@media (max-width: 768px) {
+  .servicios-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.herramientas {
+  padding: 80px 0;
+  background-color: #111111;
+  overflow: hidden;
+}
+
+
+.herramientas-header {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.herramientas-heading-fila {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.seccion-herramientas {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #A8B89A;
+  white-space: nowrap;
+}
+
+.linea {
+  height: 1px;
+  flex: 1;
+  background-color: #333333;
+}
+
+.titulo-seccion-herramientas{
+  margin-top: 16px;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+
+.seccion-herramientas-lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  padding: 0 24px;
+}
+
+.herramienta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: default;
+}
+
+.herramienta-icono {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+  transition: all 0.3s ease;
+}
+
+.herramienta:hover .herramienta-icono {
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.herramienta-nombre {
+  font-size: 12px;
+  color: #888888;
+  letter-spacing: 0.05em;
+  transition: color 0.2s ease;
+}
+
+.herramienta:hover .herramienta-nombre {
+  color: #cccccc;
+}
+
+.proceso {
+  padding: 112px 0;
+  background-color: #F3F3F3;
+}
+
+.proceso-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.proceso-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 64px;
+}
+
+.seccion-proceso {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #A8B89A;
+  margin-bottom: 12px;
+}
+
+.proceso-titulo {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: #111111;
+  line-height: 1.2;
+}
+
+.proceso-titulo-italic {
+  font-style: italic;
+  font-weight: 300;
+  color: #A8B89A;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+
+.proceso-lista {
+  display: flex;
+  flex-direction: column;
+}
+
+.pasos-de-proceso {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 32px 0;
+  border-bottom: 1px solid #D0D0D0;
+  transition: background-color 0.3s ease;
+}
+
+.pasos-de-proceso.last-step {
+  border-bottom: none;
+}
+
+.pasos-de-proceso:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+
+.proceso-numero {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #111111;
+  background-color: #F3F3F3;
+  transition: all 0.3s ease;
+}
+
+.pasos-de-proceso:hover .proceso-numero-box {
+  background-color: #111111;
+}
+
+.proceso-numero {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #111111;
+  transition: color 0.3s ease;
+}
+
+.pasos-de-proceso:hover .proceso-numero {
+  color: #A8B89A;
+}
+
+
+.seccion-proceso-contenido {
+  flex: 1 1 400px;
+  padding-top: 16px;
+}
+
+.seccion-proceso-titulo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+.pasos-de-proceso:hover .seccion-proceso-titulo {
+  color: #A8B89A;
+}
+
+.seccion-proceso-descripcion {
+  font-size: 14px;
+  color: #666666;
+  line-height: 1.7;
+  max-width: 520px;
+}
+
+
+.flecha {
+  padding-top: 24px;
+  opacity: 0.3;
+  display: none;
+}
+
+span {
+  font-size: 24px;
+  color: #111111;
+}
+
+
+@media (min-width: 1024px) {
+  .flecha {
+    display: block;
+  }
+}
+
+@media (max-width: 600px) {
+  .pasos-de-proceso {
+    gap: 16px;
+  }
+
+  .seccion-proceso-contenido {
+    padding-top: 0;
+  }
+}
+
+
+
+.seccion-por-que {
+  padding: 112px 0;
+  background-color: #111111;
+  
+}
+
+.seccion-por-que-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 64px;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.seccion-por-que-texto-columna {
+  flex: 1 1 480px;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.seccion-por-que-texto-titulo {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #A8B89A;
+  margin-bottom: 12px;
+  
+}
+
+.seccion-por-que-titulo {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+.seccion-por-que-titulo-1 {
+  color: #A8B89A;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.seccion-por-que-descripcion {
+  font-size: 16px;
+  color: #888888;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+.seccion-por-que-descripcion strong {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.seccion-por-que-boton-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 16px 32px;
+  background-color: #A8B89A;
+  color: #111111;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 14px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.seccion-por-que-boton-cta:hover {
+  background-color: #ffffff;
+}
+
+
+.lista-de-habilidades {
+  flex: 1 1 480px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.habilidad-cuadro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid #333333;
+  cursor: default;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.habilidad-cuadro:hover {
+  border-color: #A8B89A;
+  background-color: rgba(168, 184, 154, 0.1);
+}
+
+.habilidad-check {
+  color: #A8B89A;
+  font-size: 14px;
+}
+
+.habilidad-nombre {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  color: #cccccc;
+  transition: color 0.2s ease;
+}
+
+.habilidad-cuadro:hover .habilidad-nombre {
+  color: #ffffff;
+}
+
+
+@media (max-width: 900px) {
+  .seccion-por-que-container {
+    text-align: center;
+  }
+
+  .seccion-por-que-texto-columna {
+    align-items: center;
+  }
+
+  .seccion-por-que-boton-cta {
+    margin: 0 auto;
+  }
+
+  .lista-de-habilidades {
+    justify-content: center;
+  }
+}
+
+
+
+.testimonios {
+  padding: 112px 0;
+  background-color: #ffffff;
+}
+
+.testimonios-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.testimonios-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 64px;
+}
+
+.seccion-testimonios {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #A8B89A;
+  margin-bottom: 12px;
+}
+
+.seccion-testimonios-titulo {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: #111111;
+  line-height: 1.2;
+}
+
+.seccion-testimonios-titulo-italic {
+  font-style: italic;
+  font-weight: 300;
+  color: #A8B89A;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+
+.seccion-testimonios-tarjetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.seccion-testimonios-box {
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  border: 1px solid #E0E0E0;
+  cursor: default;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.seccion-testimonios-box:hover {
+  border-color: #A8B89A;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+
+.seccion-testimonios-estrellas {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.seccion-testimonios-estrellas span {
+  color: #A8B89A;
+  font-size: 14px;
+}
+
+
+.seccion-testimonios-texto {
+  font-size: 14px;
+  color: #555555;
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 24px;
+}
+
+
+.seccion-testimonios-texto-cliente {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #E0E0E0;
+  margin-top: auto;
+}
+
+.seccion-testimonios-cliente-foto {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  filter: grayscale(100%);
+}
+
+.seccion-testimonios-cliente-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.seccion-testimonios-cliente-nombre {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: #111111;
+}
+
+.seccion-testimonios-cliente-rol {
+  font-size: 12px;
+  color: #888888;
+}
+
+
+
+.contacto {
+  position: relative;   /* referencia para el círculo decorativo (position: absolute) */
+  overflow: hidden;     /* recorta la parte del círculo que sale de la sección */
+  padding: 128px 0;
+  background-color: #111111;
+}
+
+.contacto-container {
+  position: relative;   /* necesario para que z-index funcione */
+  z-index: 1;           /* el contenido queda por encima del círculo decorativo */
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+
+
+.contacto-titulo {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+.contacto-titulo-acento {
+  color: #A8B89A;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+}
+
+
+.contacto-descripcion {
+  font-size: 16px;
+  color: #888888;
+  line-height: 1.7;
+  max-width: 560px;
+  margin-bottom: 48px;
+  
+}
+
+
+.contacto-boton {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.boton-solido,
+.boton2 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px 40px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 14px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.boton-solido {
+  background-color: #A8B89A;
+  color: #111111;
+}
+
+.boton-solido:hover {
+  background-color: #ffffff;
+}
+
+.boton2 {
+  border: 1px solid #444444;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.boton2:hover {
+  border-color: #A8B89A;
+  color: #A8B89A;
+}
+
+
+@media (max-width: 500px) {
+  .contacto-boton {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .boton-solido,
+  .boton2 {
+    width: 100%;
+  }
+}
+
+
+
+.footer {
+  background-color: #0a0a0a;
+  border-top: 1px solid #1f1f1f;
+  padding: 64px 0;
+}
+
+.footer-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.footer-columnas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+.footer-columna {
+  flex: 1 1 240px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.footer-logo {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  margin-bottom: 16px;
+}
+
+.footer-logo-top {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.footer-logo-bottom {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #A8B89A;
+}
+
+.footer-descripcion {
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.7;
+  max-width: 320px;
+}
+
+
+.footer-heading {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #A8B89A;
+  margin-bottom: 20px;
+}
+
+
+.footer-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+}
+
+.footer-item {
+  font-size: 14px;
+  color: #666666;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.footer-item:hover {
+  color: #A8B89A;
+}
+
+.footer-item-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-flecha {
+  color: #A8B89A;
+  font-size: 12px;
+}
+
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 32px;
+  border-top: 1px solid #1f1f1f;
+}
+
+.footer-copy {
+  font-size: 12px;
+  color: #555555;
+}
+
+.footer-volver-arriba {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #A8B89A;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.footer-volver-arriba:hover {
+  color: #ffffff;
+}
+
+
+@media (max-width: 600px) {
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* =====================================================================
+   ANIMACIONES DE LAS SECCIONES (aparecen al hacer scroll)
+   JS agrega la clase .visible cuando el elemento entra en pantalla.
+   La clase .js la pone un mini-script en el <head>: si JavaScript falla,
+   el contenido NO queda oculto.
+   ===================================================================== */
+
+.js .revelar {
+  opacity: 0;                 /* antes de aparecer, el elemento está invisible */
+}
+
+.js .revelar.visible {
+  animation: aparecerDesdeAbajo 0.8s ease forwards; /* nombre, duración 0.8s, suavizado y "forwards" = se queda en el estado final */
+  animation-delay: var(--retraso, 0s);              /* espera opcional (por defecto 0s) para escalonar tarjetas */
+}
+
+.js .revelar-izquierda.visible {
+  animation-name: aparecerDesdeIzquierda;           /* misma animación pero entrando desde la izquierda */
+}
+
+.js .revelar-derecha.visible {
+  animation-name: aparecerDesdeDerecha;             /* entrando desde la derecha */
+}
+
+@keyframes aparecerDesdeAbajo {
+  from { opacity: 0; transform: translateY(40px); } /* inicio: invisible y 40px más abajo */
+  to   { opacity: 1; transform: none; }             /* final: visible y en su sitio */
+}
+
+@keyframes aparecerDesdeIzquierda {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes aparecerDesdeDerecha {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Escalonado: cada hermano espera un poco más que el anterior (efecto cascada) */
+.revelar:nth-child(2) { --retraso: 0.1s; }  /* el 2.º elemento espera 0.1s */
+.revelar:nth-child(3) { --retraso: 0.2s; }
+.revelar:nth-child(4) { --retraso: 0.3s; }
+.revelar:nth-child(5) { --retraso: 0.4s; }
+.revelar:nth-child(6) { --retraso: 0.5s; }
+.revelar:nth-child(7) { --retraso: 0.6s; }
+.revelar:nth-child(8) { --retraso: 0.7s; }
+.proceso-lista .revelar { --retraso: 0s; }  /* los pasos del proceso van uno debajo de otro: no necesitan cascada */
+
+/* Evita una barra de scroll horizontal mientras los elementos entran de lado */
+.sobre-mi,
+.seccion-por-que {
+  overflow-x: clip;
+}
+
+/* El indicador de scroll ya pedía la animación "pulse" pero nunca se había definido */
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }  /* la línea se atenúa... */
+  50%      { opacity: 1; }    /* ...y se ilumina, en bucle */
+}
+
+/* =====================================================================
+   SECCIÓN CONTACTO: decoración con position absolute
+   ===================================================================== */
+
+.contacto::before {
+  content: "";                                 /* pseudo-elemento vacío: solo sirve para dibujar un círculo */
+  position: absolute;                          /* se coloca respecto a .contacto (que ahora es position: relative) */
+  top: -140px;                                 /* sale 140px por arriba */
+  right: -140px;                               /* y 140px por la derecha: solo se ve parte del círculo */
+  width: 420px;                                /* tamaño del círculo */
+  height: 420px;
+  border: 1px solid rgba(168, 184, 154, 0.25); /* contorno verde salvia muy suave */
+  border-radius: 50%;                          /* 50% convierte el cuadrado en círculo */
+  pointer-events: none;                        /* el círculo no bloquea clics */
+}
+
+/* =====================================================================
+   FORMULARIO DE CONTACTO (CSS Grid + grid-template-areas)
+   ===================================================================== */
+
+.formulario-contacto {
+  width: 100%;                       /* usa todo el ancho disponible del contenedor (800px máx.) */
+  margin-top: 64px;                  /* separación respecto a los botones de arriba */
+  padding: 40px;                     /* aire interno de la tarjeta */
+  text-align: left;                  /* el contenedor centra el texto; aquí lo volvemos a alinear a la izquierda */
+  background-color: #161616;         /* gris apenas más claro que el fondo #111111 para destacar la tarjeta */
+  border: 1px solid #333333;         /* mismo gris de bordes que usa la sección Herramientas */
+  display: grid;                     /* GRID: acomoda los campos en filas y columnas */
+  grid-template-columns: 1fr 1fr;    /* dos columnas iguales */
+  grid-template-areas:               /* "mapa" del formulario: cada palabra es un área con nombre */
+    "nombre        empresa"
+    "correo        telefono"
+    "servicio      presupuesto"
+    "inicio        inicio"
+    "necesidad     necesidad"
+    "autorizacion  autorizacion"
+    "acciones      acciones";
+  gap: 24px;                         /* separación entre filas y columnas */
+}
+
+/* Cada campo se asigna a su área con grid-area (el nombre debe coincidir con el "mapa") */
+.campo-nombre        { grid-area: nombre; }
+.campo-empresa       { grid-area: empresa; }
+.campo-correo        { grid-area: correo; }
+.campo-telefono      { grid-area: telefono; }
+.campo-servicio      { grid-area: servicio; }
+.campo-presupuesto   { grid-area: presupuesto; }
+.campo-inicio        { grid-area: inicio; }
+.campo-necesidad     { grid-area: necesidad; }
+.campo-autorizacion  { grid-area: autorizacion; }
+.formulario-acciones { grid-area: acciones; }
+
+.campo {
+  position: relative;        /* referencia para la flechita absoluta de los <select> */
+  display: flex;             /* FLEXBOX: etiqueta arriba y control abajo */
+  flex-direction: column;    /* en columna */
+  gap: 8px;                  /* espacio entre etiqueta y control */
+  min-width: 0;              /* permite que el campo se encoja y no desborde la columna del grid */
+}
+
+.campo-etiqueta {
+  font-size: 12px;           /* mismo tamaño de las etiquetas del sitio */
+  font-weight: 700;
+  letter-spacing: 0.15em;    /* texto espaciado, como los títulos de sección */
+  text-transform: uppercase;
+  color: #A8B89A;            /* verde salvia de la marca */
+}
+
+.campo-control {
+  width: 100%;               /* el input/select/textarea llena su campo */
+  padding: 14px 16px;        /* alto cómodo para escribir */
+  font-family: inherit;      /* usa la misma tipografía del sitio (los inputs no la heredan por defecto) */
+  font-size: 14px;
+  color: #ffffff;            /* texto que escribe la persona */
+  background-color: #111111; /* fondo oscuro, igual que la sección */
+  border: 1px solid #333333;
+  border-radius: 0;          /* esquinas rectas, coherente con los botones cuadrados del sitio */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease; /* el resaltado al enfocar es suave */
+}
+
+.campo-control::placeholder {
+  color: #666666;            /* texto de ayuda en gris */
+}
+
+.campo-control:focus {
+  outline: none;                                   /* quitamos el contorno del navegador... */
+  border-color: #A8B89A;                           /* ...y lo reemplazamos por borde verde salvia */
+  box-shadow: 0 0 0 3px rgba(168, 184, 154, 0.15); /* halo suave: sigue siendo visible con teclado */
+}
+
+textarea.campo-control {
+  min-height: 120px;         /* alto mínimo del cuadro de mensaje */
+  resize: vertical;          /* solo se puede estirar hacia abajo, no rompe el diseño */
+}
+
+select.campo-control {
+  appearance: none;          /* quita la flecha nativa para poner la nuestra */
+  padding-right: 44px;       /* deja espacio a la derecha para la flecha */
+  cursor: pointer;
+}
+
+select.campo-control option {
+  background-color: #111111; /* fondo oscuro de la lista desplegable */
+  color: #ffffff;
+}
+
+.campo-con-flecha::after {
+  content: "▾";              /* flechita de "desplegar" */
+  position: absolute;        /* se posiciona respecto a .campo (position: relative) */
+  right: 16px;               /* 16px desde el borde derecho */
+  bottom: 14px;              /* 14px desde abajo: queda alineada con el select y no con la etiqueta */
+  font-size: 14px;
+  color: #A8B89A;
+  pointer-events: none;      /* el clic pasa a través de la flecha y abre el select */
+}
+
+.campo-autorizacion {
+  display: flex;             /* FLEXBOX: casilla a la izquierda, texto a la derecha */
+  align-items: flex-start;   /* alineados arriba, por si el texto ocupa dos líneas */
+  gap: 12px;
+}
+
+.campo-autorizacion input {
+  flex-shrink: 0;            /* la casilla nunca se aplasta */
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;           /* ajuste fino para alinear con la primera línea del texto */
+  accent-color: #A8B89A;     /* pinta la casilla marcada con el verde de la marca */
+}
+
+.campo-autorizacion label {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #888888;
+}
+
+.formulario-acciones {
+  display: flex;             /* FLEXBOX: botón y nota en una fila */
+  flex-wrap: wrap;           /* si no caben, la nota baja a otra línea */
+  align-items: center;
+  gap: 16px;
+}
+
+.formulario-enviar {
+  border: none;              /* los <button> traen borde por defecto; .boton-solido ya define color y tamaño */
+  cursor: pointer;           /* manito al pasar el mouse */
+  font-family: inherit;      /* misma tipografía del sitio */
+}
+
+.formulario-nota {
+  font-size: 12px;           /* la regla global "span" pone 24px; esta clase la corrige */
+  color: #666666;
+}
+
+/* Celulares: el "mapa" pasa a una sola columna, un campo debajo de otro */
+@media (max-width: 600px) {
+  .formulario-contacto {
+    grid-template-columns: 1fr;  /* una sola columna */
+    grid-template-areas:
+      "nombre"
+      "empresa"
+      "correo"
+      "telefono"
+      "servicio"
+      "presupuesto"
+      "inicio"
+      "necesidad"
+      "autorizacion"
+      "acciones";
+    padding: 24px;               /* menos aire interno para ganar espacio */
+  }
+}
+
+/* =====================================================================
+   AVISO FLOTANTE (confirmación al enviar el formulario)
+   ===================================================================== */
+
+.aviso-flotante {
+  position: fixed;                 /* fijo respecto a la ventana */
+  top: 96px;                       /* justo debajo del encabezado */
+  left: 50%;                       /* centrado horizontalmente (junto con translateX(-50%)) */
+  z-index: 1200;                   /* por encima de todo */
+  max-width: calc(100% - 48px);    /* nunca más ancho que la pantalla menos 24px por lado */
+  padding: 16px 24px;
+  background-color: #111111;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 1.5;
+  border-left: 4px solid #A8B89A;  /* franja de marca a la izquierda */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  opacity: 0;                      /* oculto por defecto */
+  visibility: hidden;
+  transform: translate(-50%, -20px); /* -50% en X para centrar; -20px en Y: arranca un poco más arriba */
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+.aviso-flotante.mostrar {
+  opacity: 1;                      /* JS agrega .mostrar y el aviso baja y aparece */
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+/* =====================================================================
+   BOTÓN FLOTANTE DE WHATSAPP
+   ===================================================================== */
+
+:root {
+  --color-whatsapp: #25D366;       /* verde oficial de WhatsApp; cámbialo aquí si prefieres el verde salvia (#A8B89A) */
+}
+
+.whatsapp-flotante {
+  position: fixed;                 /* siempre visible en la esquina, aunque hagas scroll */
+  right: 24px;                     /* 24px del borde derecho */
+  bottom: 24px;                    /* 24px del borde inferior */
+  z-index: 1100;                   /* encima del contenido y del encabezado */
+  display: flex;                   /* FLEXBOX para centrar el ícono... */
+  align-items: center;             /* ...vertical */
+  justify-content: center;         /* ...y horizontalmente */
+  width: 60px;                     /* círculo de 60x60 */
+  height: 60px;
+  border-radius: 50%;              /* lo vuelve círculo */
+  background-color: var(--color-whatsapp); /* usa la variable definida arriba */
+  color: #ffffff;                  /* el ícono hereda este color (fill: currentColor) */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  transition: transform 0.3s ease; /* el zoom al pasar el mouse es suave */
+}
+
+.whatsapp-flotante:hover,
+.whatsapp-flotante:focus-visible {
+  transform: scale(1.08);          /* crece un 8% al pasar el mouse o enfocar con teclado */
+}
+
+.whatsapp-flotante svg {
+  width: 32px;                     /* tamaño del ícono dentro del círculo */
+  height: 32px;
+  fill: currentColor;              /* el ícono toma el color blanco */
+}
+
+.whatsapp-flotante::before {
+  content: "";                     /* anillo que late detrás del botón */
+  position: absolute;              /* se coloca respecto al botón (fixed también sirve de referencia) */
+  inset: 0;                        /* atajo de top/right/bottom/left: 0 → mismo tamaño que el botón */
+  z-index: -1;                     /* queda detrás del ícono */
+  border-radius: 50%;
+  background-color: var(--color-whatsapp);
+  animation: latido 2.2s ease-out infinite; /* se repite sin parar cada 2.2 segundos */
+}
+
+@keyframes latido {
+  0%   { transform: scale(1);   opacity: 0.6; } /* empieza del tamaño del botón, medio visible */
+  100% { transform: scale(1.7); opacity: 0; }   /* crece y se desvanece */
+}
+
+.whatsapp-etiqueta {
+  position: absolute;              /* globito de texto pegado al botón */
+  right: calc(100% + 12px);        /* a la izquierda del botón, con 12px de separación */
+  top: 50%;                        /* centrado verticalmente... */
+  transform: translateY(-50%) translateX(8px); /* ...(-50% de su propia altura) y 8px desplazado para animar la entrada */
+  white-space: nowrap;             /* el texto no se parte en dos líneas */
+  padding: 8px 12px;
+  background-color: #111111;
+  color: #ffffff;
+  font-size: 12px;                 /* corrige la regla global "span" (24px) */
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  opacity: 0;                      /* oculto hasta pasar el mouse */
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.whatsapp-flotante:hover .whatsapp-etiqueta,
+.whatsapp-flotante:focus-visible .whatsapp-etiqueta {
+  opacity: 1;                      /* aparece... */
+  transform: translateY(-50%);     /* ...deslizándose a su posición final */
+}
+
+/* Celulares: botón un poco más pequeño y sin globito (no hay "hover" en pantallas táctiles) */
+@media (max-width: 600px) {
+  .whatsapp-flotante { width: 54px; height: 54px; right: 16px; bottom: 16px; }
+  .whatsapp-etiqueta { display: none; }
+}
+
+/* =====================================================================
+   ACCESIBILIDAD: si la persona pidió "reducir movimiento" en su dispositivo, se apagan las animaciones
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .revelar { opacity: 1; }
+  .js .revelar.visible { animation: none; }
+  .scroll-flecha,
+  .whatsapp-flotante::before { animation: none; }
+  .whatsapp-flotante::before { display: none; }
+}
+
+/* =====================================================================
+   PÁGINAS INTERNAS (proyectos.html y contacto.html)
+   Todo lo de abajo es NUEVO. Lo anterior del archivo no se tocó.
+   ===================================================================== */
+
+/* ---------- Enlace de la página actual en el menú ---------- */
+.links-barranavegacion a[aria-current="page"]:not(.cta) {
+  color: #A8B89A;                 /* el enlace de la página donde estás se pinta verde salvia (el botón .cta se excluye con :not) */
+}
+
+/* ---------- Cabecera de página (título grande de Proyectos) ---------- */
+.cabecera-pagina {
+  padding: 176px 0 96px;          /* 176px arriba: deja libre el encabezado fijo (~75px) y respira; 96px abajo */
+  background-color: #ffffff;      /* fondo blanco, igual que el inicio */
+}
+
+.cabecera-pagina-contenedor {
+  max-width: 1280px;              /* mismo ancho máximo que el resto del sitio */
+  margin: 0 auto;                 /* centrado */
+  padding: 0 24px;                /* margen lateral */
+  display: grid;                  /* GRID para repartir título y texto */
+  grid-template-columns: 1.2fr 0.8fr; /* columna del título un poco más ancha que la del texto */
+  grid-template-areas: "titulo texto"; /* una fila con dos áreas con nombre */
+  align-items: end;               /* el texto se alinea con la base del título */
+  gap: 48px;                      /* espacio entre las dos áreas */
+}
+
+.cabecera-pagina-titulo-area {
+  grid-area: titulo;              /* este bloque ocupa el área "titulo" */
+  display: flex;                  /* FLEXBOX: etiqueta arriba, título abajo */
+  flex-direction: column;
+}
+
+.cabecera-pagina-texto-area {
+  grid-area: texto;               /* este bloque ocupa el área "texto" */
+}
+
+.etiqueta-seccion {
+  font-size: 12px;                /* mismas medidas que "— Servicios", "— Sobre mí", etc. */
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #A8B89A;
+  margin-bottom: 12px;
+}
+
+.titulo-pagina {
+  font-size: clamp(2.5rem, 7vw, 5.5rem); /* tamaño fluido: mínimo 2.5rem, máximo 5.5rem, 7vw entre medio */
+  font-weight: 800;
+  color: #111111;
+  line-height: 1.1;
+}
+
+.titulo-pagina-italic {
+  font-style: italic;             /* misma fórmula de los demás títulos: palabra en cursiva, ligera y verde */
+  font-weight: 300;
+  color: #A8B89A;
+  font-size: clamp(2.5rem, 7vw, 5.5rem); /* se repite porque la regla global "span" fuerza 24px */
+}
+
+.texto-pagina {
+  font-size: 16px;
+  color: #555555;
+  line-height: 1.7;
+}
+
+.texto-pagina strong {
+  color: #111111;                 /* las palabras clave resaltan en negro */
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .cabecera-pagina-contenedor {
+    grid-template-columns: 1fr;                  /* una sola columna */
+    grid-template-areas: "titulo" "texto";       /* el texto pasa debajo del título */
+    gap: 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .cabecera-pagina {
+    padding: 136px 0 64px;        /* menos aire en celulares */
+  }
+}
+
+/* ---------- Galería de proyectos ---------- */
+.galeria {
+  padding: 112px 0;               /* mismo ritmo vertical que las demás secciones */
+  background-color: #F3F3F3;      /* gris claro de las secciones "Sobre mí" y "Proceso" */
+}
+
+.galeria-contenedor {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.galeria-rejilla {
+  display: grid;                  /* GRID: mosaico de tarjetas */
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+  grid-template-areas:            /* mapa del mosaico: las tarjetas grandes ocupan 2 columnas */
+    "amova  amova    glindel"
+    "cielo  sublime  sublime";
+  gap: 24px;
+}
+
+/* Cada tarjeta se asigna a su área del mapa */
+.proyecto-amova   { grid-area: amova; }
+.proyecto-glindel { grid-area: glindel; }
+.proyecto-cielo   { grid-area: cielo; }
+.proyecto-sublime { grid-area: sublime; }
+
+.proyecto-tarjeta {
+  position: relative;             /* referencia para el visual decorativo (position: absolute) */
+  overflow: hidden;               /* recorta lo que sobresale de la tarjeta (círculo, imagen) */
+  min-height: 420px;              /* alto mínimo para que se vean como galería */
+  display: flex;                  /* FLEXBOX: el contenido se apila... */
+  flex-direction: column;
+  justify-content: flex-end;      /* ...y se pega a la parte de abajo de la tarjeta */
+  padding: 40px;
+  background-color: var(--fondo-tarjeta); /* los colores salen de variables que define cada tema (abajo) */
+  color: var(--texto-tarjeta);
+  transition: box-shadow 0.4s ease; /* sombra suave al pasar el mouse */
+}
+
+.proyecto-tarjeta:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* la tarjeta "se despega" sin moverse */
+}
+
+/* Tarjetas angostas: más altas para que la imagen quede arriba y el texto abajo, sin taparse */
+.proyecto-glindel,
+.proyecto-cielo {
+  min-height: 640px;
+}
+
+/* TEMAS DE COLOR: cada uno solo redefine las variables de la tarjeta */
+.proyecto-oscuro {
+  --fondo-tarjeta: #111111;
+  --texto-tarjeta: #ffffff;
+  --texto-suave: #999999;                 /* color del párrafo */
+  --acento-tarjeta: #A8B89A;              /* detalles: categoría, círculo, monograma */
+  --boton-fondo: #A8B89A;
+  --boton-texto: #111111;
+  --boton-fondo-hover: #ffffff;
+  --boton-texto-hover: #111111;
+  --borde-etiqueta: #444444;
+}
+
+.proyecto-salvia {
+  --fondo-tarjeta: #A8B89A;               /* tarjeta verde salvia */
+  --texto-tarjeta: #111111;
+  --texto-suave: #333333;
+  --acento-tarjeta: #111111;
+  --boton-fondo: #111111;
+  --boton-texto: #ffffff;
+  --boton-fondo-hover: #ffffff;
+  --boton-texto-hover: #111111;
+  --borde-etiqueta: rgba(17, 17, 17, 0.4);
+}
+
+.proyecto-claro {
+  --fondo-tarjeta: #ffffff;
+  --texto-tarjeta: #111111;
+  --texto-suave: #666666;
+  --acento-tarjeta: #A8B89A;
+  --boton-fondo: #111111;
+  --boton-texto: #ffffff;
+  --boton-fondo-hover: #A8B89A;
+  --boton-texto-hover: #111111;
+  --borde-etiqueta: #D0D0D0;
+  border: 1px solid #E0E0E0;              /* la tarjeta blanca lleva borde para separarla del fondo gris */
+}
+
+.proyecto-visual {
+  position: absolute;             /* capa de fondo que cubre toda la tarjeta */
+  inset: 0;                       /* atajo de top/right/bottom/left: 0 */
+  z-index: 0;                     /* queda detrás del texto */
+  overflow: hidden;
+}
+
+.proyecto-visual img {
+  position: absolute;             /* el logo se coloca en una zona propia de la tarjeta */
+  z-index: 1;
+  box-sizing: border-box;         /* el padding da aire alrededor del logo sin recortarlo */
+  object-fit: contain;            /* contain = el logo se ve COMPLETO y centrado, nunca recortado */
+  object-position: center;
+  opacity: 0.55;                  /* sutil: el logo acompaña, el texto manda */
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+/* Tarjetas angostas: franja superior reservada para el logo, por encima del texto */
+.proyecto-glindel,
+.proyecto-cielo {
+  padding-top: 300px;             /* reserva el espacio del logo: el texto nunca lo pisa */
+}
+
+.proyecto-glindel .proyecto-visual img,
+.proyecto-cielo .proyecto-visual img {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 280px;
+  padding: 44px 32px 12px;
+}
+
+/* Tarjetas anchas en escritorio: logo a la derecha, centrado; texto a la izquierda */
+.proyecto-amova .proyecto-visual img,
+.proyecto-sublime .proyecto-visual img {
+  top: 0;
+  right: 0;
+  width: 42%;
+  height: 100%;
+  padding: 40px 40px 40px 16px;   /* logo centrado en su zona; el monograma queda como marca de agua detrás */
+}
+
+.proyecto-amova .proyecto-descripcion,
+.proyecto-sublime .proyecto-descripcion {
+  max-width: 420px;               /* el texto no invade la zona del logo */
+}
+
+/* Capa suave del color de la tarjeta: asegura que el texto siempre se lea */
+.proyecto-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(to top, var(--fondo-tarjeta) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.proyecto-amova .proyecto-visual::before,
+.proyecto-sublime .proyecto-visual::before {
+  background: linear-gradient(to right, var(--fondo-tarjeta) 28%, transparent 58%);
+}
+
+.proyecto-tarjeta:hover .proyecto-visual img {
+  transform: scale(1.04);         /* zoom lento del logo al pasar el mouse */
+  opacity: 0.8;                   /* el logo se aclara un poco al pasar el mouse */
+}
+
+.proyecto-visual::after {
+  content: "";                    /* círculo decorativo, como el de la sección Contacto */
+  position: absolute;
+  top: -120px;
+  left: -120px;
+  width: 320px;
+  height: 320px;
+  border: 1px solid var(--acento-tarjeta);
+  border-radius: 50%;
+  opacity: 0.25;
+  z-index: 2;                     /* por encima de la imagen y del degradado */
+  transition: transform 0.6s ease;
+}
+
+.proyecto-tarjeta:hover .proyecto-visual::after {
+  transform: scale(1.25);         /* el círculo crece al pasar el mouse */
+}
+
+.proyecto-monograma {
+  position: absolute;             /* letras grandes arriba a la derecha */
+  top: 24px;
+  right: 32px;
+  font-size: clamp(5rem, 12vw, 9rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: transparent;             /* relleno transparente... */
+  -webkit-text-stroke: 1px var(--acento-tarjeta); /* ...y solo contorno de 1px */
+  opacity: 0.2;                   /* muy tenue: es un detalle, no debe competir con el título */
+  z-index: 0;                     /* marca de agua detrás del logo */
+}
+
+.proyecto-contenido {
+  position: relative;             /* necesario para que z-index funcione */
+  z-index: 1;                     /* el texto va por encima del visual */
+  display: flex;                  /* FLEXBOX: categoría, título, texto, etiquetas y botón en columna */
+  flex-direction: column;
+  gap: 12px;
+}
+
+.proyecto-categoria {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--acento-tarjeta);
+}
+
+.proyecto-titulo {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--texto-tarjeta);
+}
+
+.proyecto-descripcion {
+  max-width: 480px;               /* líneas cortas = más fácil de leer */
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--texto-suave);
+}
+
+.proyecto-etiquetas {
+  display: flex;                  /* FLEXBOX: las etiquetas en fila */
+  flex-wrap: wrap;                /* si no caben, bajan de línea */
+  gap: 8px;
+  list-style: none;               /* quita los puntos de la lista */
+}
+
+.proyecto-etiquetas li {
+  padding: 6px 10px;
+  border: 1px solid var(--borde-etiqueta);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--texto-tarjeta);
+}
+
+.proyecto-boton {
+  display: inline-flex;           /* botón que se ajusta a su texto */
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-top: 12px;
+  padding: 14px 28px;
+  background-color: var(--boton-fondo);
+  color: var(--boton-texto);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.proyecto-boton:hover,
+.proyecto-boton:focus-visible {
+  background-color: var(--boton-fondo-hover);  /* cambia de color al pasar el mouse o enfocar con teclado */
+  color: var(--boton-texto-hover);
+}
+
+/* Tablet: las tarjetas anchas también apilan el logo arriba y el texto abajo */
+@media (max-width: 1100px) {
+  .proyecto-amova,
+  .proyecto-sublime {
+    padding-top: 300px;
+  }
+
+  .proyecto-amova .proyecto-visual img,
+  .proyecto-sublime .proyecto-visual img {
+    top: 0;
+    left: 0;
+    right: auto;
+    width: 100%;
+    height: 280px;
+    padding: 44px 32px 12px;
+  }
+
+  .proyecto-amova .proyecto-visual::before,
+  .proyecto-sublime .proyecto-visual::before {
+    background: linear-gradient(to top, var(--fondo-tarjeta) 0%, transparent 55%);
+  }
+
+  .proyecto-amova .proyecto-descripcion,
+  .proyecto-sublime .proyecto-descripcion {
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 900px) {
+  .proyecto-glindel,
+  .proyecto-cielo {
+    min-height: 0;                /* el alto lo da el contenido + la zona del logo */
+  }
+
+  .galeria-rejilla {
+    grid-template-columns: 1fr;   /* una columna: una tarjeta debajo de otra */
+    grid-template-areas:
+      "amova"
+      "glindel"
+      "cielo"
+      "sublime";
+  }
+}
+
+@media (max-width: 600px) {
+  .galeria {
+    padding: 80px 0;
+  }
+
+  .proyecto-tarjeta {
+    min-height: 0;
+    padding: 28px;
+  }
+
+  .proyecto-amova,
+  .proyecto-glindel,
+  .proyecto-cielo,
+  .proyecto-sublime {
+    min-height: 0;
+    padding-top: 250px;           /* zona del logo en celular */
+  }
+
+  .proyecto-amova .proyecto-visual img,
+  .proyecto-glindel .proyecto-visual img,
+  .proyecto-cielo .proyecto-visual img,
+  .proyecto-sublime .proyecto-visual img {
+    height: 230px;
+    padding: 40px 24px 8px;
+  }
+}
+
+/* ---------- Página de contacto ---------- */
+.contacto-pagina {
+  padding: 176px 0 128px;         /* reutiliza .contacto (fondo oscuro + círculo); solo cambia el espaciado por el encabezado fijo */
+}
+
+.contacto-pagina-contenedor {
+  position: relative;             /* z-index solo funciona en elementos posicionados */
+  z-index: 1;                     /* el contenido queda por encima del círculo decorativo */
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;                  /* GRID de dos columnas */
+  grid-template-columns: 1fr 1.25fr; /* la columna del formulario es un poco más ancha */
+  grid-template-rows: auto 1fr;   /* la 2.ª fila absorbe el espacio sobrante y no se abre un hueco entre intro e información */
+  grid-template-areas:
+    "intro        formulario"
+    "informacion  formulario";    /* el formulario ocupa las dos filas de la derecha */
+  gap: 64px;
+  align-items: start;
+}
+
+.contacto-pagina-intro {
+  grid-area: intro;
+}
+
+.contacto-pagina-info {
+  grid-area: informacion;
+}
+
+.contacto-pagina-contenedor .formulario-contacto {
+  grid-area: formulario;          /* el formulario (que ya existía) toma su área */
+  margin-top: 0;                  /* el margen de 64px era para cuando iba debajo de los botones */
+}
+
+.contacto-pagina-titulo {
+  margin-bottom: 24px;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.15;
+}
+
+.contacto-pagina-titulo-acento {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-style: italic;
+  font-weight: 300;
+  color: #A8B89A;
+}
+
+.contacto-pagina-texto {
+  max-width: 520px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #888888;
+}
+
+.contacto-pagina-texto strong {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.contacto-pasos {
+  display: flex;                  /* FLEXBOX: pasos en columna */
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 40px;
+  margin-bottom: 40px;
+  border-top: 1px solid #333333;  /* línea que separa la intro de los pasos */
+  list-style: none;
+}
+
+.contacto-paso {
+  display: flex;                  /* FLEXBOX: número a la izquierda, texto a la derecha */
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.contacto-paso-numero {
+  flex-shrink: 0;                 /* el cuadro del número no se aplasta */
+  display: flex;
+  align-items: center;            /* número centrado en el cuadro */
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #333333;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #A8B89A;
+}
+
+.contacto-paso-titulo {
+  margin-bottom: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.contacto-paso-texto {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #888888;
+}
+
+/* .contacto-datos {
+  display: flex;                  FLEXBOX: datos de contacto en columna */
+  /* flex-direction: column;
+  gap: 16px;
+  list-style: none;
+}
+
+.contacto-dato-etiqueta {
+  margin-bottom: 2px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #A8B89A;
+}
+
+.contacto-dato-valor {
+  font-size: 15px;
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a.contacto-dato-valor:hover {
+  color: #A8B89A;
+} */
+
+@media (max-width: 900px) {
+  .contacto-pagina-contenedor {
+    grid-template-columns: 1fr;   /* una columna */
+    grid-template-rows: auto;     /* filas según su contenido */
+    grid-template-areas:
+      "intro"
+      "formulario"
+      "informacion";              /* en celular: texto, formulario y luego la información */
+    gap: 48px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contacto-pagina {
+    padding: 136px 0 96px;
+  }
+}

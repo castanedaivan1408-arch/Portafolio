@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cuéntame tu proyecto: formulario de contacto de Iván Castañeda, producción multimedia y branding.">
+    <title>Contacto | Iván Castañeda</title>
+    <link rel="stylesheet" href="portafolio.css">
+    <!-- Marca la página como "con JavaScript": el CSS solo oculta lo que va a animar si esta clase existe -->
+    <script>document.documentElement.classList.add("js");</script>
+    <!-- El mismo JS sirve para las 3 páginas; defer = se ejecuta cuando el HTML ya cargó -->
+    <script src="portafolio.js" defer></script>
+</head>
+<body>
+<!-- ENCABEZADO FIJO: idéntico en las 3 páginas. Solo cambia aria-current="page", que marca dónde estás -->
+<header class="encabezado" id="encabezado">
+  <div class="encabezado-contenedor">
+    <a href="portafolio.html" class="logo">
+      <span class="logo-nombre">IVAN</span>
+      <span class="logo-apellido">CASTAÑEDA</span>
+    </a>
+
+    <nav aria-label="Navegación principal">
+      <ul class="links-barranavegacion" id="menuNavegacion">
+        <li><a href="portafolio.html">Inicio</a></li>
+        <li><a href="proyectos.html">Proyectos</a></li>
+        <li><a href="contacto.html" class="cta" aria-current="page">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <button class="menu-hamburguesa" id="botonMenu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menuNavegacion">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<!-- CONTACTO: reutiliza .contacto (fondo oscuro + círculo decorativo) y agrega .contacto-pagina para el espaciado.
+     El contenedor es un GRID con áreas "intro", "formulario" e "informacion". -->
+<section class="contacto contacto-pagina" id="contacto">
+  <div class="contacto-pagina-contenedor">
+
+    <!-- Área "intro": título y mensaje -->
+    <div class="contacto-pagina-intro revelar">
+      <span class="etiqueta-seccion">— Contacto</span>
+      <h1 class="contacto-pagina-titulo">
+        Hablemos de<br>
+        <span class="contacto-pagina-titulo-acento">tu próximo proyecto.</span>
+      </h1>
+      <p class="contacto-pagina-texto">
+        Una buena marca empieza con una buena conversación. Cuéntame qué necesitas y <strong>te respondo con claridad</strong>, sin compromiso y sin letra pequeña.
+      </p>
+    </div>
+
+    <!-- FORMULARIO DE CONTACTO (se movió aquí desde el inicio): al enviarlo, portafolio.js abre WhatsApp con los datos ya escritos.
+         Los campos se acomodan con CSS Grid usando grid-template-areas (ver .formulario-contacto en el CSS). -->
+    <form class="formulario-contacto revelar" id="formularioContacto">
+
+      <div class="campo campo-nombre">
+        <label class="campo-etiqueta" for="nombre">Nombre y apellido *</label>
+        <input class="campo-control" id="nombre" name="nombre" required placeholder="Tu nombre" autocomplete="name">
+      </div>
+
+      <div class="campo campo-empresa">
+        <label class="campo-etiqueta" for="empresa">Empresa o marca</label>
+        <input class="campo-control" id="empresa" name="empresa" placeholder="Nombre de la empresa" autocomplete="organization">
+      </div>
+
+      <div class="campo campo-correo">
+        <label class="campo-etiqueta" for="correo">Correo electrónico *</label>
+        <input class="campo-control" id="correo" name="correo" type="email" required placeholder="nombre@empresa.com" autocomplete="email">
+      </div>
+
+      <div class="campo campo-telefono">
+        <label class="campo-etiqueta" for="telefono">WhatsApp *</label>
+        <input class="campo-control" id="telefono" name="telefono" type="tel" required placeholder="+57 300 000 0000" autocomplete="tel">
+      </div>
+
+      <div class="campo campo-servicio campo-con-flecha">
+        <label class="campo-etiqueta" for="servicio">Servicio de interés *</label>
+        <select class="campo-control" id="servicio" name="servicio" required>
+          <option value="">Selecciona una opción</option>
+          <option>Branding y diseño gráfico</option>
+          <option>Diseño web y UX/UI</option>
+          <option>Producción audiovisual</option>
+          <option>Fotografía comercial</option>
+          <option>Contenido para redes</option>
+          <option>Campañas digitales</option>
+          <option>Solución integral / No estoy seguro</option>
+        </select>
+      </div>
+
+      <div class="campo campo-presupuesto campo-con-flecha">
+        <label class="campo-etiqueta" for="presupuesto">Presupuesto aproximado</label>
+        <select class="campo-control" id="presupuesto" name="presupuesto">
+          <option value="">Prefiero conversarlo</option>
+          <option>Menos de $500.000 COP</option>
+          <option>$500.000 – $1.000.000 COP</option>
+          <option>$1.000.000 – $2.500.000 COP</option>
+          <option>$2.500.000 – $5.000.000 COP</option>
+          <option>Más de $5.000.000 COP</option>
+        </select>
+      </div>
+
+      <div class="campo campo-inicio campo-con-flecha">
+        <label class="campo-etiqueta" for="fecha">¿Cuándo necesitas iniciar?</label>
+        <select class="campo-control" id="fecha" name="fecha">
+          <option value="">Aún no lo sé</option>
+          <option>Lo antes posible</option>
+          <option>En las próximas 2 semanas</option>
+          <option>En el próximo mes</option>
+          <option>En 1 a 3 meses</option>
+          <option>Solo estoy cotizando</option>
+        </select>
+      </div>
+
+      <div class="campo campo-necesidad">
+        <label class="campo-etiqueta" for="necesidad">Cuéntame sobre tu proyecto *</label>
+        <textarea class="campo-control" id="necesidad" name="necesidad" rows="4" required placeholder="¿Qué necesitas? ¿Cuál es el objetivo? ¿Hay alguna fecha o referencia importante?"></textarea>
+      </div>
+
+      <div class="campo-autorizacion">
+        <input type="checkbox" id="autorizacion" name="autorizacion" required>
+        <label for="autorizacion">Autorizo el uso de estos datos únicamente para responder a esta solicitud de contacto. *</label>
+      </div>
+
+      <div class="formulario-acciones">
+        <button class="boton-solido formulario-enviar" type="submit">Enviar solicitud por WhatsApp <span>→</span></button>
+        <span class="formulario-nota">Se abrirá WhatsApp; tú confirmas el envío.</span>
+      </div>
+
+    </form>
+
+    <!-- Área "informacion": qué pasa después + datos directos -->
+    <div class="contacto-pagina-info revelar">
+      <ol class="contacto-pasos">
+        <li class="contacto-paso">
+          <div class="contacto-paso-numero">01</div>
+          <div>
+            <h2 class="contacto-paso-titulo">Me escribes</h2>
+            <p class="contacto-paso-texto">Completa el formulario. Se abre WhatsApp con tu mensaje listo para enviar.</p>
+          </div>
+        </li>
+        <li class="contacto-paso">
+          <div class="contacto-paso-numero">02</div>
+          <div>
+            <h2 class="contacto-paso-titulo">Reviso tu caso</h2>
+            <p class="contacto-paso-texto">Analizo tu objetivo y tu público, y te respondo con ideas concretas.</p>
+          </div>
+        </li>
+        <li class="contacto-paso">
+          <div class="contacto-paso-numero">03</div>
+          <div>
+            <h2 class="contacto-paso-titulo">Definimos el plan</h2>
+            <p class="contacto-paso-texto">Acordamos alcance, tiempos y una propuesta a tu medida.</p>
+          </div>
+        </li>
+      </ol>
+
+      <!-- <ul class="contacto-datos">
+        <li>
+          <p class="contacto-dato-etiqueta">Correo</p>
+          <a class="contacto-dato-valor" href="mailto:castanedaivan1408@gmail.com">castanedaivan1408@gmail.com</a>
+        </li>
+        <li>
+          <p class="contacto-dato-etiqueta">WhatsApp</p>
+          <a class="contacto-dato-valor" href="https://wa.me/573232037503" target="_blank" rel="noopener">+57 323 203 7503</a>
+        </li>
+        <li>
+          <p class="contacto-dato-etiqueta">Ubicación</p>
+          <p class="contacto-dato-valor">Colombia · Disponible remoto</p>
+        </li>
+      </ul> -->
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-columnas">
+
+      <div class="footer-columna">
+        <div class="footer-logo">
+          <div class="footer-logo-top">IVAN</div>
+          <div class="footer-logo-bottom">CASTAÑEDA</div>
+        </div>
+        <p class="footer-descripcion">
+          Diseñador Multimedia · Branding · Marketing Digital.<br>
+          Diseño estrategias visuales que convierten ideas en marcas memorables.
+        </p>
+      </div>
+
+      <div class="footer-columna">
+        <h4 class="footer-heading">Contacto</h4>
+        <ul class="footer-lista">
+          <li class="footer-item">castanedaivan1408@gmail.com</li>
+          <li class="footer-item">+57 313 8158951</li>
+          <li class="footer-item">Colombia · Disponible remoto</li>
+        </ul>
+      </div>
+
+      <div class="footer-columna">
+        <h4 class="footer-heading">Redes</h4>
+        <ul class="footer-lista">
+          <li class="footer-item footer-item-link"><span class="footer-flecha">→</span> LinkedIn</li>
+          <li class="footer-item footer-item-link"><span class="footer-flecha">→</span> Behance</li>
+          <li class="footer-item footer-item-link"><span class="footer-flecha">→</span> Instagram</li>
+          <li class="footer-item footer-item-link"><span class="footer-flecha">→</span> Portafolio</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Ivan Castañeda. Todos los derechos reservados.</span>
+      <button class="footer-volver-arriba" id="botonVolverArriba" type="button">↑ Volver arriba</button>
+    </div>
+
+  </div>
+</footer>
+
+<!-- BOTÓN FLOTANTE DE WHATSAPP: position: fixed en la esquina inferior derecha -->
+<a class="whatsapp-flotante" href="https://wa.me/57 313 8158951?text=Hola%20Iv%C3%A1n%2C%20quisiera%20consultar%20sobre%20tus%20servicios%20multimedia." target="_blank" rel="noopener" aria-label="Escribir a Iván por WhatsApp">
+  <span class="whatsapp-etiqueta">Escríbeme por WhatsApp</span>
+  <!-- Ícono de WhatsApp en SVG: no necesita imágenes externas y toma el color del texto (currentColor) -->
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<!-- AVISO: confirma que se abrió WhatsApp (role="status" hace que los lectores de pantalla lo anuncien) -->
+<div class="aviso-flotante" id="avisoFlotante" role="status" aria-live="polite"></div>
+
+</body>
+</html>
